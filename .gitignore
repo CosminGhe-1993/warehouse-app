@@ -1,0 +1,10 @@
+# .NET build output
+backend/bin/
+backend/obj/
+
+# Local secrets (JWT key, Groq API key) - never committed, see appsettings.json
+backend/appsettings.Development.json
+
+# Visual Studio / VS Code local files
+.vs/
+*.user
