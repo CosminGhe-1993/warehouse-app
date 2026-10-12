@@ -1,0 +1,24 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+  backend:
+    build: ./backend
+    ports:
+      - "5127:5127"
+    environment:
+      - MongoDb__ConnectionString=mongodb://mongo:27017
+      - Jwt__Key=${JWT_KEY}
+      - Groq__ApiKey=${GROQ_API_KEY}
+    depends_on:
+      - mongo
+  frontend:
+    build: ./frontend
+    ports:
+      - "8081:80"
+
+volumes:
+  mongo-data:

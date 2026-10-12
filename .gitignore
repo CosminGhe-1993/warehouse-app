@@ -5,6 +5,11 @@ backend/obj/
 # Local secrets (JWT key, Groq API key) - never committed, see appsettings.json
 backend/appsettings.Development.json
 
+# Local secrets for Docker Compose and Kubernetes - see k8s/secret.example.yaml
+# for the structure, and docker-compose.yml's ${JWT_KEY}/${GROQ_API_KEY} usage.
+.env
+k8s/secret.yaml
+
 # Visual Studio / VS Code local files
 .vs/
 *.user

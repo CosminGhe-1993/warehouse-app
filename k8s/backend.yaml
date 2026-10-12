@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: warehouse-app-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5127
+          env:
+            - name: MongoDb__ConnectionString
+              value: "mongodb://mongo:27017"
+            - name: Jwt__Key
+              valueFrom:
+                secretKeyRef:
+                  name: warehouse-secrets
+                  key: jwt-key
+            - name: Groq__ApiKey
+              valueFrom:
+                secretKeyRef:
+                  name: warehouse-secrets
+                  key: groq-api-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 5127
+      targetPort: 5127
